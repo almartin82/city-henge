@@ -21,6 +21,13 @@
   .header h1 { font-size: 48px; font-weight: 700; font-family: 'Boldonse', var(--mono); letter-spacing: 0.05em; }
   .header h1 span { color: #111; }
   .header p { font-size: 13px; color: #666; margin-top: 4px; font-family: var(--mono); }
+  .wordmark-sun { display: inline-block; vertical-align: 0px; margin: 0 12px 0 4px; cursor: pointer; transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); transform-origin: 25px 26px; }
+  .wordmark-sun:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 50%; }
+  .tonight-line { display: none; font-family: var(--mono); font-size: 13px; color: #111; margin: 14px 0 0; padding: 8px 12px; border: 1px solid var(--orange); background: #fff8ee; }
+  .tonight-line.visible { display: block; }
+  .tonight-line strong { color: var(--orange); font-weight: 700; letter-spacing: 0.04em; }
+  .tonight-city { color: #111; cursor: pointer; text-decoration: underline; text-decoration-color: rgba(255,153,0,0.4); text-underline-offset: 3px; }
+  .tonight-city:hover { text-decoration-color: var(--orange); }
   .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; align-items: center; }
   .filter-btn { padding: 4px 12px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-size: 12px; color: #444; font-family: var(--mono); }
   .filter-btn.active { background: #111; color: #fff; border-color: #111; }
@@ -41,6 +48,9 @@
   .date-pills { display: flex; gap: 8px; flex-wrap: wrap; }
   .date-pill { padding: 8px 12px; border: 1px solid #e0e0e0; text-align: center; background: #fafafa; position: relative; }
   .date-pill.upcoming { border-color: #111; background: #fff; }
+  .date-pill.tonight { border-color: var(--orange); background: #fff8ee; animation: tonight-breath 2.6s ease-in-out infinite; }
+  @keyframes tonight-breath { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,153,0,0); } 50% { box-shadow: 0 0 0 4px rgba(255,153,0,0.18); } }
+  @media (prefers-reduced-motion: reduce) { .date-pill.tonight { animation: none; box-shadow: 0 0 0 3px rgba(255,153,0,0.22); } .wordmark-sun { transition: none; } }
   a.date-pill { text-decoration: none; color: inherit; display: block; cursor: pointer; transition: background 0.12s ease, border-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease; }
   a.date-pill:hover { border-color: var(--orange); background: #fff8ee; transform: translateY(-1px); box-shadow: 0 2px 0 0 var(--orange); }
   a.date-pill:hover .pill-cta { color: var(--orange); }
@@ -48,8 +58,11 @@
   .pill-date { font-size: 14px; font-weight: 600; font-family: var(--mono); }
   .pill-days { font-size: 11px; color: #888; margin-top: 2px; font-family: var(--mono); }
   .date-pill.upcoming .pill-days { color: var(--orange); }
+  .pill-countdown { font-size: 10px; color: #888; margin-top: 2px; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .date-pill.tonight .pill-countdown { color: var(--orange); font-weight: 600; }
   .pill-cta { font-size: 8px; color: #bbb; margin-top: 3px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.15s ease, opacity 0.15s ease, margin-top 0.15s ease; }
   a.date-pill:hover .pill-cta, a.date-pill:focus-visible .pill-cta { max-height: 14px; opacity: 1; }
+  a.date-pill.tonight .pill-cta { max-height: 14px; opacity: 1; color: var(--orange); }
   .expand-row { font-size: 11px; color: #aaa; cursor: pointer; padding-top: 6px; font-family: var(--mono); }
   .expand-row:hover { color: #111; }
   .details { margin-top: 12px; padding-top: 12px; border-top: 1px solid #e0e0e0; display: none; }
@@ -60,6 +73,13 @@
   .math-block { font-family: var(--mono); font-size: 11px; color: #444; background: #f7f7f7; padding: 10px 12px; line-height: 2; margin-bottom: 6px; border-left: 2px solid var(--orange); }
   .math-block span { color: #111; font-weight: 600; }
   .note-text { font-size: 12px; color: #888; line-height: 1.6; }
+  .site-footer { text-align: center; padding: 2rem 0 1.5rem; font-size: 12px; color: #888; font-family: var(--mono); }
+  .site-footer a { color: inherit; }
+  .footer-next { font-size: 11px; color: #aaa; margin-bottom: 14px; font-family: var(--mono); letter-spacing: 0.02em; }
+  .footer-next .next-city { color: #111; cursor: pointer; text-decoration: underline; text-decoration-color: rgba(255,153,0,0.35); text-underline-offset: 3px; }
+  .footer-next .next-city:hover { color: var(--orange); text-decoration-color: var(--orange); }
+  .card.flash { animation: card-flash 1.6s ease-out 1; }
+  @keyframes card-flash { 0% { box-shadow: 0 0 0 0 rgba(255,153,0,0); } 25% { box-shadow: 0 0 0 4px rgba(255,153,0,0.45); } 100% { box-shadow: 0 0 0 0 rgba(255,153,0,0); } }
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2226%22%20fill%3D%22white%22/%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23f90%22%20stroke-width%3D%221.5%22%3E%3Cline%20x1%3D%2245.0%22%20y1%3D%2232.0%22%20x2%3D%2254.0%22%20y2%3D%2232.0%22/%3E%3Cline%20x1%3D%2244.0%22%20y1%3D%2237.0%22%20x2%3D%2252.3%22%20y2%3D%2240.4%22/%3E%3Cline%20x1%3D%2241.2%22%20y1%3D%2241.2%22%20x2%3D%2247.6%22%20y2%3D%2247.6%22/%3E%3Cline%20x1%3D%2237.0%22%20y1%3D%2244.0%22%20x2%3D%2240.4%22%20y2%3D%2252.3%22/%3E%3Cline%20x1%3D%2232.0%22%20y1%3D%2245.0%22%20x2%3D%2232.0%22%20y2%3D%2254.0%22/%3E%3Cline%20x1%3D%2227.0%22%20y1%3D%2244.0%22%20x2%3D%2223.6%22%20y2%3D%2252.3%22/%3E%3Cline%20x1%3D%2222.8%22%20y1%3D%2241.2%22%20x2%3D%2216.4%22%20y2%3D%2247.6%22/%3E%3Cline%20x1%3D%2220.0%22%20y1%3D%2237.0%22%20x2%3D%2211.7%22%20y2%3D%2240.4%22/%3E%3Cline%20x1%3D%2219.0%22%20y1%3D%2232.0%22%20x2%3D%2210.0%22%20y2%3D%2232.0%22/%3E%3Cline%20x1%3D%2220.0%22%20y1%3D%2227.0%22%20x2%3D%2211.7%22%20y2%3D%2223.6%22/%3E%3Cline%20x1%3D%2222.8%22%20y1%3D%2222.8%22%20x2%3D%2216.4%22%20y2%3D%2216.4%22/%3E%3Cline%20x1%3D%2227.0%22%20y1%3D%2220.0%22%20x2%3D%2223.6%22%20y2%3D%2211.7%22/%3E%3Cline%20x1%3D%2232.0%22%20y1%3D%2219.0%22%20x2%3D%2232.0%22%20y2%3D%2210.0%22/%3E%3Cline%20x1%3D%2237.0%22%20y1%3D%2220.0%22%20x2%3D%2240.4%22%20y2%3D%2211.7%22/%3E%3Cline%20x1%3D%2241.2%22%20y1%3D%2222.8%22%20x2%3D%2247.6%22%20y2%3D%2216.4%22/%3E%3Cline%20x1%3D%2244.0%22%20y1%3D%2227.0%22%20x2%3D%2252.3%22%20y2%3D%2223.6%22/%3E%3C/g%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2211%22%20fill%3D%22%23f90%22/%3E%3C/svg%3E">
 <link rel='preconnect' href='https://fonts.googleapis.com'>
@@ -68,8 +88,9 @@
 <body>
 <div class="page">
   <div class="header">
-    <h1>CITY<svg width="50" height="26" viewBox="0 0 50 26" style="display:inline-block;vertical-align:0px;margin:0 12px 0 4px" xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="26" r="26" fill="white"/><g fill="none" stroke="#f90" stroke-width="1.5"><line x1="38.00" y1="26.00" x2="47.00" y2="26.00"/><line x1="37.01" y1="30.97" x2="45.33" y2="34.42"/><line x1="34.19" y1="35.19" x2="40.56" y2="41.56"/><line x1="29.97" y1="38.01" x2="33.42" y2="46.33"/><line x1="25.00" y1="39.00" x2="25.00" y2="48.00"/><line x1="20.03" y1="38.01" x2="16.58" y2="46.33"/><line x1="15.81" y1="35.19" x2="9.44" y2="41.56"/><line x1="12.99" y1="30.97" x2="4.67" y2="34.42"/><line x1="12.00" y1="26.00" x2="3.00" y2="26.00"/><line x1="12.99" y1="21.03" x2="4.67" y2="17.58"/><line x1="15.81" y1="16.81" x2="9.44" y2="10.44"/><line x1="20.03" y1="13.99" x2="16.58" y2="5.67"/><line x1="25.00" y1="13.00" x2="25.00" y2="4.00"/><line x1="29.97" y1="13.99" x2="33.42" y2="5.67"/><line x1="34.19" y1="16.81" x2="40.56" y2="10.44"/><line x1="37.01" y1="21.03" x2="45.33" y2="17.58"/></g><circle cx="25" cy="26" r="11" fill="#f90"/></svg><span>HENGE</span></h1>
+    <h1>CITY<svg id="wordmark-sun" class="wordmark-sun" width="50" height="26" viewBox="0 0 50 26" role="button" tabindex="0" aria-label="Sun. Click to align with the next henge." xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="26" r="26" fill="white"/><g fill="none" stroke="#f90" stroke-width="1.5"><line x1="38.00" y1="26.00" x2="47.00" y2="26.00"/><line x1="37.01" y1="30.97" x2="45.33" y2="34.42"/><line x1="34.19" y1="35.19" x2="40.56" y2="41.56"/><line x1="29.97" y1="38.01" x2="33.42" y2="46.33"/><line x1="25.00" y1="39.00" x2="25.00" y2="48.00"/><line x1="20.03" y1="38.01" x2="16.58" y2="46.33"/><line x1="15.81" y1="35.19" x2="9.44" y2="41.56"/><line x1="12.99" y1="30.97" x2="4.67" y2="34.42"/><line x1="12.00" y1="26.00" x2="3.00" y2="26.00"/><line x1="12.99" y1="21.03" x2="4.67" y2="17.58"/><line x1="15.81" y1="16.81" x2="9.44" y2="10.44"/><line x1="20.03" y1="13.99" x2="16.58" y2="5.67"/><line x1="25.00" y1="13.00" x2="25.00" y2="4.00"/><line x1="29.97" y1="13.99" x2="33.42" y2="5.67"/><line x1="34.19" y1="16.81" x2="40.56" y2="10.44"/><line x1="37.01" y1="21.03" x2="45.33" y2="17.58"/></g><circle cx="25" cy="26" r="11" fill="#f90"/></svg><span>HENGE</span></h1>
     <p>When the <a href="https://en.wikipedia.org/wiki/Manhattanhenge" style="color:inherit">sun lines up</a> with city street grids around the world</p>
+    <div id="tonight-line" class="tonight-line" aria-live="polite"></div>
   </div>
   <div class="filters">
     <button class="filter-btn active" onclick="setFilter('all',this)">All cities</button>
@@ -303,15 +324,27 @@ function renderCards(){
     const pillsHtml=city.datesThis.map(d=>{
       const days=daysUntil(d);
       const up=days>=0;
-      const dayStr=days===0?'today':days===1?'tomorrow':`in ${days} days`;
       if(up){
         const url=gcalUrl(city,d);
         const sunset=sunsetUTC(city.lat,city.lng,d);
         const sunsetLocal=sunset?fmtLocalTime(sunset,city.tz):'';
-        const tip=sunset?`Add to Google Calendar — sunset ${sunsetLocal} (${leadMinutes(city.lat)} min before)`:'Add to Google Calendar';
-        return `<a href="${url}" target="_blank" rel="noopener" class="date-pill upcoming" title="${tip}" aria-label="${tip}">
+        const tip=sunset?`Add to Google Calendar (sunset ${sunsetLocal} local, ${leadMinutes(city.lat)} min before)`:'Add to Google Calendar';
+        const tonight=sunset&&days<=1&&sunset.getTime()>Date.now();
+        const pillClasses=`date-pill upcoming${tonight?' tonight':''}`;
+        let daysLine;
+        if(tonight){
+          const word=days===0?'tonight':'tomorrow';
+          daysLine=`${word} · sunset ${sunsetLocal}`;
+        } else {
+          daysLine=days===0?'today':days===1?'tomorrow':`in ${days} days`;
+        }
+        const countdownHtml=tonight
+          ? `<div class="pill-countdown" data-sunset-ms="${sunset.getTime()}">${fmtCountdown(sunset.getTime()-Date.now())}</div>`
+          : '';
+        return `<a href="${url}" target="_blank" rel="noopener" class="${pillClasses}" title="${tip}" aria-label="${tip}">
           <div class="pill-date">${fmtLong(d)}</div>
-          <div class="pill-days">${dayStr}</div>
+          <div class="pill-days">${daysLine}</div>
+          ${countdownHtml}
           <div class="pill-cta">+ Add to cal</div>
         </a>`;
       }
@@ -368,9 +401,149 @@ function toggle(card){
   row.textContent=card.classList.contains('expanded')?'Hide ↑':'Show angles + math ↓';
 }
 
+function fmtCountdown(ms){
+  if(ms<=0) return 'happening now';
+  const totalMin=Math.round(ms/60000);
+  const days=Math.floor(totalMin/(60*24));
+  const hours=Math.floor((totalMin-days*60*24)/60);
+  const mins=totalMin-days*60*24-hours*60;
+  if(days>0) return `in ${days}d ${hours}h`;
+  if(hours>0) return `in ${hours}h ${String(mins).padStart(2,'0')}m`;
+  return `in ${mins}m`;
+}
+
+let _allHengesCache=null;
+function allCityHenges(){
+  if(_allHengesCache) return _allHengesCache;
+  const out=[];
+  CITIES.forEach(city=>{
+    [THIS_YEAR,THIS_YEAR+1].forEach(yr=>{
+      const key='verified'+yr;
+      const dates=city[key]
+        ? city[key].map(([m,d])=>new Date(yr,m,d))
+        : findHengeDates(city,yr);
+      dates.forEach(d=>{
+        const sunset=sunsetUTC(city.lat,city.lng,d);
+        out.push({city,date:d,sunset});
+      });
+    });
+  });
+  _allHengesCache=out;
+  return out;
+}
+
+function findTonightHenges(){
+  const now=Date.now();
+  const cutoff=now+36*3600*1000;
+  return allCityHenges()
+    .filter(h=>h.sunset && h.sunset.getTime()>now && h.sunset.getTime()<=cutoff)
+    .sort((a,b)=>a.sunset-b.sunset);
+}
+
+function findNextHengeAnywhere(){
+  const now=Date.now();
+  return allCityHenges()
+    .filter(h=>h.sunset && h.sunset.getTime()>now)
+    .sort((a,b)=>a.sunset-b.sunset)[0]||null;
+}
+
+function renderTonightLine(){
+  const line=document.getElementById('tonight-line');
+  if(!line) return;
+  const tonights=findTonightHenges();
+  if(!tonights.length){ line.classList.remove('visible'); line.innerHTML=''; return; }
+  const items=tonights.slice(0,3).map(h=>{
+    const hoursOut=(h.sunset.getTime()-Date.now())/3600000;
+    const word=hoursOut<18?'Tonight':'Tomorrow';
+    const time=fmtLocalTime(h.sunset,h.city.tz);
+    return `<span><strong>${word}:</strong> <span class="tonight-city" data-city="${h.city.name}">${h.city.henge}</span> · sunset ${time} in ${h.city.name}</span>`;
+  }).join(' &nbsp;·&nbsp; ');
+  line.innerHTML=items;
+  line.classList.add('visible');
+}
+
+function renderFooterNext(){
+  const slot=document.getElementById('footer-next');
+  if(!slot) return;
+  const next=findNextHengeAnywhere();
+  if(!next){ slot.textContent=''; return; }
+  const days=Math.max(0,Math.round((next.date-TODAY)/86400000));
+  const dayStr=days===0?'today':days===1?'tomorrow':`in ${days} days`;
+  const time=fmtLocalTime(next.sunset,next.city.tz);
+  slot.innerHTML=`Next henge anywhere: <span class="next-city" data-city="${next.city.name}">${next.city.henge}</span> · ${fmtLong(next.date)} · ${dayStr} · sunset ${time} in ${next.city.name}`;
+}
+
+function scrollToCity(name){
+  const cards=document.querySelectorAll('.card');
+  for(const card of cards){
+    const cn=card.querySelector('.city-name');
+    if(cn && cn.textContent===name){
+      card.scrollIntoView({behavior:'smooth',block:'center'});
+      card.classList.remove('flash');
+      void card.offsetWidth;
+      card.classList.add('flash');
+      return;
+    }
+  }
+}
+
+document.addEventListener('click',(e)=>{
+  const t=e.target.closest('[data-city]');
+  if(t){ scrollToCity(t.dataset.city); }
+});
+
+function updateLiveCountdowns(){
+  document.querySelectorAll('.pill-countdown[data-sunset-ms]').forEach(el=>{
+    const ms=Number(el.dataset.sunsetMs)-Date.now();
+    el.textContent=fmtCountdown(ms);
+  });
+}
+
+(function setupWordmarkSun(){
+  const sun=document.getElementById('wordmark-sun');
+  if(!sun) return;
+  const queue=allCityHenges()
+    .filter(h=>h.sunset && h.sunset.getTime()>Date.now())
+    .sort((a,b)=>a.sunset-b.sunset);
+  let cumulative=0,idx=0;
+  function spin(){
+    if(!queue.length){ cumulative+=360; sun.style.transform=`rotate(${cumulative}deg)`; return; }
+    const h=queue[idx % queue.length];
+    const sign=h.city.offsetDir==='CW'?1:-1;
+    cumulative+=h.city.offset*sign+30;
+    sun.style.transform=`rotate(${cumulative}deg)`;
+    sun.setAttribute('aria-label',`Sun aligned with ${h.city.henge} (${h.city.offset}° grid offset)`);
+    idx++;
+  }
+  sun.addEventListener('click',spin);
+  sun.addEventListener('keydown',(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); spin(); } });
+})();
+
 renderCards();
+function initDelight(){
+  renderTonightLine();
+  renderFooterNext();
+  updateLiveCountdowns();
+  setInterval(updateLiveCountdowns,30000);
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',initDelight);
+}else{
+  initDelight();
+}
+
+(function(){
+  const s='color:#f90;font-family:monospace;font-size:13px;font-weight:bold';
+  const d='color:#888;font-family:monospace';
+  console.log('%cCity Henge', s);
+  console.log('%cWhen the sun lines up with city street grids.', d);
+  console.log('%cSource: https://github.com/mikecardarelli/city-henge', d);
+  console.log('%cMissing a city? Open an issue or PR.', d);
+})();
 </script>
-<footer style="text-align:center;padding:2rem 0 1.5rem;font-size:12px;color:#888;font-family:var(--mono)">Built by <a href="https://mikecardarelli.com/">Mike C.</a> in NYC. (Last updated April 2026)
+<footer class="site-footer">
+  <div id="footer-next" class="footer-next"></div>
+  Built by <a href="https://mikecardarelli.com/">Mike C.</a> in NYC. (Last updated April 2026)
 
   <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
     <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>

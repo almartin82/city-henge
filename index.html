@@ -108,8 +108,13 @@
 </div>
 
 <script>
-const TODAY = new Date();
-TODAY.setHours(0,0,0,0);
+// DEMO-ONLY: this branch pins the clock to 2026-05-28 14:00 EDT
+// so the tonight banner is visible for PR preview screenshots.
+// DO NOT MERGE.
+const _DEMO_NOW = new Date(2026, 4, 28, 14, 0, 0);
+const _origDateNow = Date.now;
+Date.now = () => _DEMO_NOW.getTime();
+const TODAY = new Date(_DEMO_NOW.getFullYear(), _DEMO_NOW.getMonth(), _DEMO_NOW.getDate());
 const THIS_YEAR = TODAY.getFullYear();
 
 const CITIES = [
